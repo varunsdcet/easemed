@@ -433,7 +433,7 @@ class VideoCall extends Component<Props> {
                 onPress={this.toggleHideButtons}
                 style={styles.container}
             >
-                <AgoraView style={styles.localView} showLocalVideo={true} mode={1} />
+                 <AgoraView style={styles.localView} remoteUid={this.state.peerIds[0]}showLocalVideo={false} mode={1} />
                  <View style = {styles.absViews}>
                  <View style = {{flexDirection:'row',width:window.width,height:80,marginLeft:12,justifyContent:'space-between',marginTop:6}}>
 
@@ -493,7 +493,12 @@ class VideoCall extends Component<Props> {
 
         <View style={styles.absView}>
 
-                    {this.agoraPeerViews(this.state)}
+        <AgoraView
+    mode={1}
+    style={{width: (width - 40) / 3,height:  (width - 40) / 3,margin:5,borderWidth:6,borderColor:'white',backgroundColor:'red'}}
+    zOrderMediaOverlay={true}
+    showLocalVideo={true}
+/>
 
 
                     <View style={{flex:2,flexDirection:'row',backgroundColor:'transparent',width:window.width - 30,position:'absolute',bottom:10,height:250}}>
