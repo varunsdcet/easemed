@@ -10,6 +10,7 @@ import {
     Dimensions,
     ScrollView,
     TextInput,
+    Linking,
     TouchableOpacity,
 } from 'react-native';
 import Button from 'react-native-button';
@@ -287,7 +288,7 @@ onSelectMedicine = (item,index) =>{
   var indexs = this.state.mainArray[this.state.myindex]
 indexs.name = item.brand_name
   //alert(JSON.stringify(index))
-  this.state.mainArray[index] = indexs
+  this.state.mainArray[this.state.myindex] = indexs
   //this.setState({mainArray:this.state.mainArray})
 
 }
@@ -420,6 +421,7 @@ showDialog =(index) =>{
 }
 
 myselect = () =>{
+  alert('hi')
 
   let newly_added_data = {
     name:'',
@@ -606,7 +608,7 @@ medicine:JSON.stringify(myarr)
         console.log(JSON.stringify(responseJson))
           if (responseJson.status == true) {
 
-
+Linking.openURL(responseJson.pdf_url);
 
             alert("Successfully Upload")
 
@@ -643,6 +645,7 @@ medicine:JSON.stringify(myarr)
 
 
 popupshow = (item,index) =>{
+  alert(index)
   this.setState({news:[]})
   this.setState({myindex:index})
 
@@ -716,19 +719,29 @@ _renderItems = ({item,index}) => {
              <View style={{marginLeft: wp(4), flexDirection:'column'}}>
                <Text style = {{color:'black',fontSize: 15,fontFamily:'AvenirLTStd-Heavy',textAlign:'left',marginTop:hp('1%'), lineHeight:35}}>
                Drug Name</Text>
-               <TouchableOpacity
-               onPress={()=> this.popupshow(a,i)}>
+
                <View style = {{flexDirection:'row',marginTop:hp('0%'),width:wp('92%'),height:hp('7%'), borderColor:'#F0F0F0',borderRadius:5, borderWidth:2,  backgroundColor:'white',}}>
-                   <TextInput style = {{width:wp('92%'),color:'black', height:hp('7%'), fontSize:16, fontFamily:'Avenir Roman', paddingLeft:wp(3),}}
+                   <TextInput style = {{width:wp('80%'),color:'black', height:hp('7%'), fontSize:16, fontFamily:'Avenir Roman', paddingLeft:wp(3),}}
                               placeholder = {'Enter Medicine'}
                               placeholderTextColor = "#909090"
                               value = {a.name}
-                              editable = {false}
+                              onChangeText={text => {
+                                                       let { mainArray } = this.state;
+                                                       mainArray[i].name = text;
+                                                       this.setState({
+                                                           mainArray,
+                                                       });
+                                                   }}
 
                    />
+                   <TouchableOpacity
+                   onPress={()=> this.popupshow(a,i)}>
+                   <Image style={{width:20, height:20,marginTop:12, resizeMode:'contain'}}
+                   source={require('./arrow.png')}/>
+                      </TouchableOpacity>
                </View>
 
-               </TouchableOpacity>
+
 
                <View style={{flexDirection:'row',justifyContent:'space-between', marginRight:wp(5)}}>
 
